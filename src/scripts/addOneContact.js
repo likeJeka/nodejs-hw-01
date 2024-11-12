@@ -1,16 +1,24 @@
-import { readContacts } from '../utils/readContacts.js';
-import { writeContacts } from '../utils/writeContacts.js';
+console.log('Starting addOneContact.js script...');
+
+import readContacts from '../utils/readContacts.js';
+import writeContacts from '../utils/writeContacts.js';
 import createFakeContact from '../utils/createFakeContact.js';
 
-export const addOneContact = async () => {
+async function addOneContact() {
   try {
-    const existingContacts = await readContacts();
+    const contacts = await readContacts();
+    console.log('Existing contacts:', contacts);
+
     const newContact = createFakeContact();
-    const updatedContacts = [...existingContacts, newContact];
-    await writeContacts(updatedContacts);
+    console.log('New contact to add:', newContact);
+
+    contacts.push(newContact);
+
+    await writeContacts(contacts);
+    console.log('New contact successfully added to db.json:', newContact);
   } catch (error) {
     console.error('Error adding one contact:', error);
   }
-};
+}
 
 addOneContact();
